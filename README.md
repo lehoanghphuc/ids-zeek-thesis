@@ -1,6 +1,5 @@
 
-```
-```markdown
+
 # IDS Zeek Thesis
 
 Hệ thống phát hiện xâm nhập (Intrusion Detection System) sử dụng **Zeek** kết hợp cảnh báo qua **Telegram**.
@@ -62,7 +61,7 @@ Rồi chạy các lệnh sau:
 git add README.md
 git commit -m "Add README"
 git push
-```
+
 
 ---
 
