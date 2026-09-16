@@ -1,13 +1,15 @@
 import subprocess
 import requests
 import os
-
+import time
+import json
 LOG_FILE = "/opt/zeek/logs/current/notice.log"
 
 # Khuyến nghị: đặt token bằng environment variable
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
-
+last_sent={}
+COOLDOWN_SECONDS = 60
 
 def send_telegram(message):
     if not BOT_TOKEN or not CHAT_ID:
@@ -56,15 +58,30 @@ for line in process.stdout:
     if line.startswith("#"):
         continue
 
-    fields = line.split("\t")
+    #fields = line.split("\t")
 
     # notice.log phải có ít nhất các field cơ bản
-    if len(fields) < 2:
-        continue
+   # if len(fields) < 2:
+    #    continue#
 
     # Tìm CustomDetect ở bất kỳ field nào
     if "CustomDetect" not in line:
         continue
+    try:
+        data = json.loads(line)
+        key = (data.get("note"), data.get("src"))
+    except Exception:
+        key = (line[:50],)
+
+
+    now = time.time()
+
+
+    if key in last_sent and now - last_sent[key] < COOLDOWN_SECONDS:
+        continue
+
+    last_sent[key] = now
+
 
     print(f"NEW ZEEK ALERT: {line}")
 
