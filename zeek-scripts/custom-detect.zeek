@@ -16,6 +16,7 @@ event connection_state_remove(c: connection)
     {
     local orig = c$id$orig_h;
     local resp_p = c$id$resp_p;
+    local dst = c$id$resp_h;
 
     # --- Port scan: dem so port khac nhau tu 1 nguon ---
     if ( orig !in scan_tracker )
@@ -25,7 +26,7 @@ event connection_state_remove(c: connection)
     if ( |scan_tracker[orig]| > 15 )
         {
         NOTICE([$note=Port_Scan,
-                $msg=fmt("Possible port scan from %s (%d ports)", orig, |scan_tracker[orig]|),
+                $msg=fmt("Possible port scan from %s to %s (%d ports)", orig, dst, |scan_tracker[orig]|),
                 $src=orig]);
         }
 
@@ -36,7 +37,7 @@ event connection_state_remove(c: connection)
         if ( syn_tracker[orig] > 30 )
             {
             NOTICE([$note=SYN_Flood,
-                    $msg=fmt("Possible SYN flood from %s (%d attempts)", orig, syn_tracker[orig]),
+                    $msg=fmt("Possible SYN flood from %s to %s (%d attempts)", orig, dst, syn_tracker[orig]),
                     $src=orig]);
             }
         }
@@ -46,7 +47,7 @@ event connection_state_remove(c: connection)
         if ( ssh_fail_tracker[orig] > 4 )
             {
             NOTICE ([$note=SSH_Bruteforce,
-                     $msg=fmt("Possible SSH brute-force from %s (%d connection attempt)", orig, ssh_fail_tracker[orig]),
+                     $msg=fmt("Possible SSH brute-force from %s to %s (%d connection attempt)", orig, dst, ssh_fail_tracker[orig]),
                      $src=orig]);
             }
         }
