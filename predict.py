@@ -9,13 +9,21 @@ def main():
     ap.add_argument("--features", required=True, help="CSV tu extract_conn_features.py")
     ap.add_argument("--model", required=True)
     ap.add_argument("--label-encoder", required=True)
-    ap.add_argument("--feature-columns", required=True)
     ap.add_argument("--out", default="predictions.csv")
     args = ap.parse_args()
  
     clf = joblib.load(args.model)
     le = joblib.load(args.label_encoder)
-    feature_columns = joblib.load(args.feature_columns)
+    feature_columns = [
+        "Destination Port",
+        "Flow Duration",
+        "Total Fwd Packets",
+        "Total Length of Fwd Packets",
+        "Flow Bytes/s",
+        "Flow Packets/s",
+        "Fwd Packets/s",
+        "Bwd Packets/s",
+    ]
  
     df = pd.read_csv(args.features)
  
