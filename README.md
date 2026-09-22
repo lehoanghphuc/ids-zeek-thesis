@@ -23,7 +23,8 @@ Kali (Attacker) → FW1 (Cisco ASA) → Zeek (IDS, inline bridge) → vIOS (Rout
                                                                       ├── Site A: Switch A → Linux, May1_B
                                                                       ├── Site B: Switch B → May2_b
                                                                       └── Net Cloud (external)
-```
+```<img width="1649" height="970" alt="image" src="https://github.com/user-attachments/assets/3d56149e-9097-4347-9103-20f40d6702b2" />
+
 
 - **FW1 (ASA):** kiểm soát truy cập, NAT/PAT giữa Attacker và mạng nội bộ.
 - **Zeek (Ubuntu, v8.0.5):** đặt inline tại chokepoint bằng bridge 2 NIC (br0), có thêm NIC thứ 3 riêng cho quản trị.
