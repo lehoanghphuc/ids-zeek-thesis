@@ -14,13 +14,8 @@
 Hệ thống được triển khai trong mô hình mạng doanh nghiệp giả lập trên EVE-NG, gồm firewall, router, các switch/site nội bộ, với Zeek đặt tại điểm "chokepoint" (giữa Firewall và Router) để giám sát toàn bộ lưu lượng North-South.
 
 ## 2. Mô hình mạng (Topology)
+![Network topology](./topology.png)
 
-```
-Kali (Attacker) → FW1 (Cisco ASA) → Zeek (IDS, inline bridge) → vIOS (Router)
-                                                                      ├── Site A: Switch A → Linux, May1_B
-                                                                      ├── Site B: Switch B → May2_b
-                                                                      └── Net Cloud (external)
-```
 
 - **FW1 (ASA):** kiểm soát truy cập, NAT/PAT giữa Attacker và mạng nội bộ.
 - **Zeek (Ubuntu, v8.0.5):** đặt inline tại chokepoint bằng bridge 2 NIC (br0), có thêm NIC thứ 3 riêng cho quản trị.
